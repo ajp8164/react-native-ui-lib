@@ -37,14 +37,22 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   value?: number;
   /**
-   * Minimum value
+   * Initial minimum value (when using range slider)
    */
+  initialMinimumValue?: number;
+   /**
+    * Initial maximum value (when using range slider)
+    */
+  initialMaximumValue?: number;
+    /**
+    * Track minimum value
+    */
   minimumValue?: number;
-  /**
-   * Maximum value
-   */
+   /**
+    * Track maximum value
+    */
   maximumValue?: number;
-  /**
+   /**
    * Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)
    */
   step?: number;
@@ -127,6 +135,8 @@ type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
 const defaultProps = {
   value: 0,
+  initialMinimumValue: 0,
+  initialMaximumValue: 1,
   minimumValue: 0,
   maximumValue: 1,
   step: 0,
@@ -155,8 +165,8 @@ export default class Slider extends PureComponent<SliderProps, State> {
   private _x_min = 0;
   private lastDx = 0;
 
-  private initialValue = this.getRoundedValue(this.props.useRange ? this.props.maximumValue : this.props.value);
-  private minInitialValue = this.getRoundedValue(this.props.minimumValue);
+  private initialValue = this.getRoundedValue(this.props.useRange ? this.props.initialMaximumValue : this.props.value);
+  private minInitialValue = this.getRoundedValue(this.props.initialMinimumValue);
   private lastValue = this.initialValue;
   private lastMinValue = this.minInitialValue;
 
